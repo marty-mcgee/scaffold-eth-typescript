@@ -21,7 +21,6 @@ cache
 artifacts
 tenderly.yaml
 
-
 # secrets / env
 **/.env.*.local
 **/*.secret
@@ -72,6 +71,7 @@ yarn-error.log*
 # misc
 .DS_Store
 *.pem
-packages/common/src/scaffold.config.json
+# packages/common/src/scaffold.config.json
 
+# vscode
 *.code-workspace
