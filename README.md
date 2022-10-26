@@ -1,91 +1,216 @@
 # 🏗 Scaffold-Eth Typescript
 
-## Typescript
+## Features
 
-This is the typescript repo of scaffold.eth. The directories that you'll use are:
+This is the typescript repo of scaffold-eth. Use scaffold-eth-typescript with:
 
-```bash
-packages/vite-app-ts/
-packages/hardhat-ts/
-```
+- A react frontend running with `nextjs` or `vite`.
+- Solidity toolkit of `hardhat` or `foundry`
+- It has the a command line system that allows you to choose a **react frontend** or **solidity toolkit**
 
 ## Quick Start
 
+### Fork or clone the repo
+
+- You can use the use the template link: [scaffold-eth-typescript template](https://github.com/scaffold-eth/scaffold-eth-typescript/generate)
+- You can clone the repo with git
+  ```bash
+  git clone https://github.com/scaffold-eth/scaffold-eth-typescript.git
+  ```
+
+### Starting the App
+
 Running the app
 
-1. install your dependencies
+1. install your dependencies, `open a new command prompt`
 
    ```bash
    yarn install
    ```
 
-2. start a hardhat node
+2. Create a default `scaffold.config.json` configuration file
+
+   ```bash
+   yarn create-config
+   ```
+
+3. start a local hardhat node (chain)
 
    ```bash
    yarn chain
    ```
 
-3. run the app, `open a new command prompt`
+4. Run the app, `open a new command prompt terminal`
 
    ```bash
-   # build hardhat & external contracts types
-   yarn contracts:build 
+   # in a new terminal
+   # compile your contracts
+   yarn compile
    # deploy your hardhat contracts
    yarn deploy
-   # start vite 
-   yarn start 
+   # start the react app (vite)
+   yarn start
    ```
-   
+
+5. Open http://localhost:3000 to see your front end
+
+## Configuration
+
+Scaffold uses `scaffold.config.json` as a configuration file located in `/packages/common/scaffold.config.json`. You can create the config file by running the command `yarn create-config`.
+
+### Command line help
+
+```bash
+use `-h` with any command for help.  e.g. yarn set-react -h
+```
+
+### Configure react and solidity toolkit
+
+You can change the configuration file to pick different frontends and solidity toolkits.
+
+```bash
+yarn set-react `nextjs` or `vite`
+yarn set-solidity `hardhat` or `foundry`
+```
+
+### Target network
+
+Set your `targetNetwork` in the config. This is the network the solidity toolkit is deploying against.
+
+Set your `availableNetworks` in the config. This is the networks the frontend is available in.
+
+You can configure it from the **config file** or from **command line**.
+
+```bash
+yarn set-network -h
+yarn set-network 'localhost' 'localhost, mainnet'
+```
+
+### More commands
+
+You can see all the other commands by using `yarn scaffold`
+
+## Solidity Tookits Details
+
+### Hardhat
+
+Everything will be installed with `yarn install`.
+
+You can use hardhat with right context using
+
+```bash
+yarn hardhat
+```
+
+### Foundry
+
+Make sure you install foundry
+
+1. Make sure you install foundry first. Use `curl -L https://foundry.paradigm.xyz | bash` to install foundryup
+
+   > You can see more details here. https://book.getfoundry.sh/getting-started/installation
+
+2. Run `yarn install:foundry` to install or update foundry in the right folder. It will also run _forge install_ automatically with the right context.
+
+You can use foundry commands with the right context
+
+```bash
+yarn forge
+yarn anvil
+yarn cast
+```
+
+## Directories
+
+The directories that you'll use are:
+
+```bash
+packages/solidity-ts/
+
+And one of either:
+packages/vite-app-ts/
+packages/next-app-ts/
+```
+
+### More Info
+
+Other commands
+
+```bash
+# rebuild all contracts, incase of inconsistent state
+yarn contracts:clean
+yarn contracts:build
+# run hardhat commands for the workspace, or see all tasks
+yarn hardhat 'xxx'
+# run forge, anvil or
+yarn forge
+yarn anvil
+yarn cast
+```
+
+Other folders
+
+```bash
+# for subgraph checkout README.md in following directories
+packages/subgraph/
+packages/services/
+```
+
 ## Guides
-
-- Check out [eth-hooks docs](https://scaffold-eth.github.io/eth-hooks/docs/overview) for example of how to use hooks
-- you can look at [speedrun ethereum](https://speedrunethereum.com/) to get started with scaffold-eth-typescript and web3.  
-  - 🏁 Make sure to click on the typescript tab!
-
-
-## Overview
 
 Everything you need to build on Ethereum! 🚀 Quickly experiment with Solidity using a frontend that adapts to your smart contract:
 
 ![image](https://user-images.githubusercontent.com/2653167/124158108-c14ca380-da56-11eb-967e-69cde37ca8eb.png)
 
-- 🔏 Edit your smart contract `YourContract.sol` in `packages/hardhat-ts/contracts`
-- 📝 Edit your frontend `MainPage.jsx` in `packages/vite-app-ts/src`
-- 💼 Edit your deployment scripts in `packages/hardhat-ts/deploy`
+- 🔏 Edit your smart contract `YourContract.sol` in `packages/solidity-ts/contracts`
+- 📝 Edit your frontend `MainPage.tsx` in `packages/vite-app-ts/src`
+- 💼 Edit your deployment scripts in `packages/solidity-ts/deploy/hardhat-deploy`
 - 📱 Open http://localhost:3000 to see the app
+- 👷🏽‍♂️ run `yarn hardhat` to get a list of all the tasks. Run `yarn hardhat taskname` to run the task.
 
-## More Information!
-### 📚 Documentation
+<br/><br/><br/>
 
-Documentation, tutorials, challenges, and many more resources, visit: [docs.scaffoldeth.io](https://docs.scaffoldeth.io)
+---
 
-Eth-hooks documentation is [here](https://scaffold-eth.github.io/eth-hooks/).  Learn how to use the contexts here.
+# Documentation
 
+Check out [eth-hooks docs](https://scaffold-eth.github.io/eth-ui) for example of how to use hooks
 
-### 🔭 Learning Solidity
+## Video Tutorials
 
-Read the docs: https://docs.soliditylang.org
+Tutorial using the CLI
 
-Go through each topic from [solidity by example](https://solidity-by-example.org) editing `YourContract.sol` in **🏗 scaffold-eth**
+- [Scaffold-eth-typescript Tutorial: Foundry, NextJS, CLI](https://www.youtube.com/watch?v=bEd6wV2H28g)
 
+Eth-hooks v4 & scaffold-eth-typescript overview
 
-### 🏃💨 Speedrun Ethereum
+- [Getting Started with eth-hooks and scaffold-eth-typescript](https://www.youtube.com/watch?v=a7W9nTX8qLk&t=3s)
+- [eth-hooks v4](https://www.youtube.com/watch?v=STxAdE8wQwY&t=86s)
+
+## 🏃💨 Speedrun Ethereum
+
 Register as a builder [here](https://speedrunethereum.com) and start on some of the challenges and build a portfolio.
 
-### 🛠 Buidl
+> 🏁 Make sure to click on the typescript tab!
 
-Check out all the [active branches](https://github.com/austintgriffith/scaffold-eth/branches/active), [open issues](https://github.com/austintgriffith/scaffold-eth/issues), and join/fund the 🏰 [BuidlGuidl](https://BuidlGuidl.com)!
+<br/><br/><br/>
 
-[Follow the full Ethereum Speed Run](https://medium.com/@austin_48503/%EF%B8%8Fethereum-dev-speed-run-bd72bcba6a4c)
+---
 
+# Extra!
 
-### 💌 P.S.
-
-You need an RPC key for testnets and production deployments, create an [Alchemy](https://www.alchemy.com/) account and replace the value of `ALCHEMY_KEY = xxx` in `packages/react-app/src/constants.js` with your new key.
-
-### 💬 Support Chat
+## 💬 Support Chat
 
 Join the telegram [support chat 💬](https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA) to ask questions and find others building with 🏗 scaffold-eth!
+
+## 🛠 Buidl
+
+Check out
+
+- [Typescript challenges](https://github.com/scaffold-eth/scaffold-eth-typescript-challenges)
+- [Typescript examples](https://github.com/scaffold-eth/scaffold-eth-typescript-examples)
+- [Vanilla JS active branches](https://github.com/scaffold-eth/scaffold-eth/branches/active)
+- Join/fund the 🏰 [BuidlGuidl](https://BuidlGuidl.com)!
 
 ### 🙏🏽 Support us!
 

@@ -1,17 +1,18 @@
 import { Row, Col, Button } from 'antd';
 import { Faucet, GasGauge } from 'eth-components/ant';
-import { useEthersContext } from 'eth-hooks/context';
+import { useEthersAppContext } from 'eth-hooks/context';
 import React, { FC } from 'react';
 
-import { Ramp, ThemeSwitcher } from '~~/components/common';
-import { getFaucetAvailable } from '~~/components/common/FaucetHintButton';
-import { IScaffoldAppProviders } from '~~/components/main/hooks/useScaffoldAppProviders';
-import { getNetworkInfo } from '~~/functions/getNetworkInfo';
-import { NETWORKS } from '~~/models/constants/networks';
+import { Ramp, ThemeSwitcher, getFaucetAvailable } from '~common/components';
+import { networkDefinitions } from '~common/constants';
+import { getNetworkInfo } from '~common/functions';
+import { IScaffoldAppProviders } from '~common/models';
+import { FAUCET_ENABLED } from '~~/config/viteApp.config';
 
 export interface IMainPageFooterProps {
   scaffoldAppProviders: IScaffoldAppProviders;
   price: number;
+  children?: React.ReactNode;
 }
 
 /**
@@ -20,10 +21,12 @@ export interface IMainPageFooterProps {
  * @returns
  */
 export const MainPageFooter: FC<IMainPageFooterProps> = (props) => {
-  const ethersContext = useEthersContext();
+  const ethersAppContext = useEthersAppContext();
 
   // Faucet Tx can be used to send funds from the faucet
-  const faucetAvailable = getFaucetAvailable(props.scaffoldAppProviders, ethersContext);
+  const faucetAvailable = getFaucetAvailable(props.scaffoldAppProviders, ethersAppContext, FAUCET_ENABLED);
+
+  const network = getNetworkInfo(ethersAppContext.chainId);
 
   const left = (
     <div
@@ -36,7 +39,7 @@ export const MainPageFooter: FC<IMainPageFooterProps> = (props) => {
       }}>
       <Row align="middle" gutter={[4, 4]}>
         <Col span={8}>
-          <Ramp price={props.price} address={ethersContext?.account ?? ''} networks={NETWORKS} />
+          <Ramp price={props.price} address={ethersAppContext?.account ?? ''} networks={networkDefinitions} />
         </Col>
 
         <Col
@@ -46,9 +49,9 @@ export const MainPageFooter: FC<IMainPageFooterProps> = (props) => {
             opacity: 0.8,
           }}>
           <GasGauge
-            chainId={props.scaffoldAppProviders.targetNetwork.chainId}
-            currentNetwork={getNetworkInfo(ethersContext.chainId)}
-            provider={ethersContext.provider}
+            chainId={props.scaffoldAppProviders.currentTargetNetwork.chainId}
+            currentNetwork={network}
+            provider={ethersAppContext.provider}
             speed="average"
           />
         </Col>

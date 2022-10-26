@@ -1,14 +1,6 @@
-packages/subgraph/subgraph.yaml
-packages/subgraph/generated
-packages/subgraph/abis/*
-packages/hardhat/*.txt
-**/aws.json
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 **/node_modules
-
-packages/subgraph/config/config.json
-tenderly.yaml
 
 #build
 *.tsbuildinfo
@@ -16,33 +8,50 @@ tenderly.yaml
 .yalc
 yalc.lock
 packages/vite-app-ts/dist
-packages/hardhat-ts/mnemonic.secret
+packages/**/data
+build
+dist
+**/generated/**/*
 
-# ts
-packages/hardhat-ts/cache
-# secrets
-.secret
+# solidity
+packages/solidity-ts/cache
+packages/solidity-ts/generated
+packages/common/src/generated
+cache
+artifacts
+tenderly.yaml
 
-# dependencies
+
+# secrets / env
+**/.env.*.local
+**/*.secret
+**/aws.json
+!packages/solidity-ts/mnemonics/README.md
+**/mnemonics/*.secret
+**/mnemonics/*.txt
+
+#subgraph
+packages/subgraph/config/config.json
+packages/subgraph/subgraph.yaml
+packages/subgraph/generated
+packages/subgraph/abis/*
+
+# dependencies, yarn, etc
 /node_modules
 /.pnp
 .pnp.js
 # yarn / eslint
-.yarn/cache
-.yarn/install-state.gz
-.yarn/build-state.yml
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 .eslintcache
 
 # testing
 coverage
-
-# production
-build
-dist
-
-#Hardhat files
-cache
-artifacts
 
 # misc
 .DS_Store
@@ -55,4 +64,12 @@ yarn-error.log*
 .idea
 
 
+# vercel
+**/.vercel/**/*
+**/.next/**/*
+**/out/**/*
 
+# misc
+.DS_Store
+*.pem
+packages/common/src/scaffold.config.json
